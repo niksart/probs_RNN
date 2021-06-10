@@ -38,6 +38,7 @@ def get_prob_distributions(data_source):
 
     hidden = model.init_hidden(eval_batch_size)
 
+    ret = []
     with torch.no_grad():
         for i in range(0, data_source.size(0) - 1, seq_len):
             # keep continuous hidden state across all sentences in the input file
@@ -69,8 +70,9 @@ def get_prob_distributions(data_source):
                     })
 
             hidden = repackage_hidden(hidden)
+            ret += l
 
-    return l
+    return ret
 
 
 # Set the random seed manually for reproducibility.
